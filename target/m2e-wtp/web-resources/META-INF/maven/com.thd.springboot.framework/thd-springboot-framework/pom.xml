@@ -7,7 +7,6 @@
 	<packaging>war</packaging>
 	<name>thd-springboot-framework</name>
 	<description>thd-springboot-framework</description>
-
 	<!-- SpringBoot项目需集成该依赖 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -101,18 +100,11 @@
 			<version>1.2.35</version>
 		</dependency>
 		
-		
+		<!-- 服务监控 -->
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-test</artifactId>
-		    <scope>test</scope>
-		    <dependency>
-		        <groupId>junit</groupId>
-		        <artifactId>junit</artifactId>
-		        <scope>test</scope>
-		    </dependency>
-		</dependency>
-		
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 	</dependencies>
 
 
@@ -121,8 +113,7 @@
 			<!-- 设置maven编译使用的jdk -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>

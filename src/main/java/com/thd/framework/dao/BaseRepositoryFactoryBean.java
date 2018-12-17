@@ -30,8 +30,8 @@ public class BaseRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extend
 		 /**
 	     * 此方法是JpaRepositoryFactoryBean中的，
 	     * 目的是返回一个工厂,我们调用它来反回我们自己的工厂
-	     * @param entityManager
-	     * @return
+	     * @param entityManager 实体管理器
+	     * @return RepositoryFactorySupport
 	     */
 		protected RepositoryFactorySupport createRepositoryFactory(EntityManager entityManager) {
 			return new BaseRepositoryFactory(entityManager);
@@ -51,7 +51,7 @@ public class BaseRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extend
 	         * 也就是Spring Data Jpa具体实例化一个接口的时候会去创建的实现类。
 	         * Spring Data JPA都是调用SimpleJpaRepository来创建实例。以下是我们自己的工厂实现的代码
 	         * @param information
-	         * @return
+	         * @return BaseRepositoryImpl
 	         */
 	        //设置具体的实现类是BaseRepositoryImpl
 	        @Override

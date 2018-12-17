@@ -3,15 +3,25 @@ package com.thd;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.thd.framework.dao.BaseRepositoryFactoryBean;
+import com.thd.framework.filter.ThreadPoolInitFilter;
+import com.thd.framework.filter.TimeFilter;
+import com.thd.framework.listener.MyListener;
 import com.thd.framework.redis.RedisConfig;
+import com.thd.framework.servlet.MyServlet;
 
 
 
@@ -35,7 +45,7 @@ import com.thd.framework.redis.RedisConfig;
 //------------------  servlet filter listener -----------------//
 //开启扫描@WebServlet,@WebListener,@WebFilter 
 //等同于在web.xml中配置servlet,监听器,过滤器   Scanning for Servlets, Filters, and listeners
-//@ServletComponentScan
+@ServletComponentScan
 
 
 // ------------------  hibernate -----------------//
@@ -48,9 +58,15 @@ import com.thd.framework.redis.RedisConfig;
 //------------------  加载配置文件 -----------------//
 @PropertySource(value={"classpath:config/application.yml"},encoding="utf-8") 
 
+//开启定时任务
+@EnableScheduling
 
 //开启缓存
 @EnableCaching
+
+//配置bean
+//@EnableConfigurationProperties({YmlCfg.class})//加载某个配置属性类并自动配置其属性的值在配置文件中，配置前缀参见BeanProperties的@ConfigurationProperties(prefix = "cfg")
+
 
 /**
  * 我们使用通用repository时
@@ -74,5 +90,41 @@ public class Application extends SpringBootServletInitializer {
 	}
 	
 	
+	/**
+	 * 添加servlet
+	 */
+	@Bean
+    public ServletRegistrationBean myServlet() {
+        ServletRegistrationBean myServlet = new ServletRegistrationBean();
+        myServlet.addUrlMappings("/servlet","/servlet1","/servlet2");
+        myServlet.setServlet(new MyServlet());
+        return myServlet;
+    }
+	
+	/**
+	 * 添加Filter
+	 */
+	@Bean
+    public FilterRegistrationBean myFilter() {
+        FilterRegistrationBean myFilter = new FilterRegistrationBean();
+        myFilter.addUrlPatterns("/*");
+        myFilter.setFilter(new TimeFilter());
+        
+        
+        //初始化线程池
+        myFilter.addUrlPatterns("/threadTest/*");
+        myFilter.setFilter(new ThreadPoolInitFilter());
+        return myFilter;
+    }
+	
+	/**
+	 * 添加Listener
+	 */
+	@Bean
+    public ServletListenerRegistrationBean<MyListener> myServletListener() {
+        ServletListenerRegistrationBean<MyListener> myListener = new ServletListenerRegistrationBean<MyListener>();
+        myListener.setListener(new MyListener());
+        return myListener;
+    }
 	
 }

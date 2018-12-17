@@ -40,8 +40,6 @@ public class PersonController extends BaseController{
 	
 	/**
 	 * 测试synchronized方法
-	 * @param person
-	 * @return
 	 */
 	//新增person
 	@RequestMapping(value="/testTransaction",method=RequestMethod.GET)
@@ -62,8 +60,6 @@ public class PersonController extends BaseController{
 	
 	/**
 	 * 测试公共repository方法
-	 * @param person
-	 * @return
 	 */
 	@RequestMapping(value="/testBaseRepository",method=RequestMethod.GET)
 	@ResponseBody

@@ -21,7 +21,7 @@ public class RedisServiceImpl implements RedisService {
 	
 	
 	/**
-	* @CachePut 应用到写数据的方法上，如新增/修改方法，调用方法时会自动把相应的数据放入缓存
+	* - @CachePut 应用到写数据的方法上，如新增/修改方法，调用方法时会自动把相应的数据放入缓存
 	*/
 	@CachePut(value = "person", key = "#root.targetClass + #result.id", unless = "#p eq null")
 	public Person add(Person p) {
@@ -31,9 +31,7 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	/**
-	* @CacheEvict 应用到删除数据的方法上，调用方法时会从缓存中删除对应key的数据
-	* @param username
-	* @return
+	* - @CacheEvict 应用到删除数据的方法上，调用方法时会从缓存中删除对应key的数据
 	*/
 	@CacheEvict(value = "person", key = "#root.targetClass + #id", condition = "#result eq true")
 	public boolean delete(String id) {
@@ -47,7 +45,7 @@ public class RedisServiceImpl implements RedisService {
 	}
 
 	/**
-	* @CachePut 应用到写数据的方法上，如新增/修改方法，调用方法时会自动把相应的数据放入缓存
+	* - @CachePut 应用到写数据的方法上，如新增/修改方法，调用方法时会自动把相应的数据放入缓存
 	*/
 	@CachePut(value = "person", key = "#root.targetClass + #p.id", unless = "#p eq null")
 	public Person update(Person p) {

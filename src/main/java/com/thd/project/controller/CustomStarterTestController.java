@@ -20,7 +20,6 @@ public class CustomStarterTestController extends BaseController {
 	
 	/**
 	 * 测试自定义starter
-	 * @return
 	 */
 	//新增person
 	@RequestMapping(value="/test",method=RequestMethod.GET)

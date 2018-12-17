@@ -23,7 +23,6 @@ public class TransactionTestController extends BaseController{
 	
 	/**
 	 * 测试事务隔离机制(isolation=Isolation.SERIALIZABLE)
-	 * @return
 	 */
 	@RequestMapping(value="/testTransaction")
 	@ResponseBody
@@ -36,7 +35,6 @@ public class TransactionTestController extends BaseController{
 	
 	/**
 	 * 测试乐观锁
-	 * @return
 	 */
 	@RequestMapping(value="/testTransactionLock")
 	@ResponseBody
@@ -50,7 +48,6 @@ public class TransactionTestController extends BaseController{
 	
 	/**
 	 * 测试自定义非公共的repository
-	 * @return
 	 */
 	@RequestMapping(value="/testCustomTransactionTestRepository")
 	@ResponseBody
